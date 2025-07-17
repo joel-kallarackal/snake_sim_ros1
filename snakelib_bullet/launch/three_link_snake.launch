@@ -1,0 +1,27 @@
+<launch>
+  <!-- Gazebo World -->
+  <include file="$(find gazebo_ros)/launch/empty_world.launch"/>
+
+  <!-- Robot Description -->
+  <param name="robot_description" command="$(find xacro)/xacro '$(find snakelib_description)/three_link_snake.urdf'" />
+
+  <!-- Joint state publisher -->
+  <node name="joint_state_publisher" pkg="joint_state_publisher" type="joint_state_publisher" />
+
+  <!-- Robot state publisher -->
+  <node name="robot_state_publisher" pkg="robot_state_publisher" type="robot_state_publisher" />
+
+  <!-- Controllers -->
+  <!-- <rosparam file="$(find snakelib_bullet)/param/controller.yaml" command="load" /> -->
+  <rosparam file="$(find snakelib_bullet)/param/controller_params.yaml" command="load" />
+
+  <!-- Spawn the model -->
+  <node name="spawn_unit_box" pkg="gazebo_ros" type="spawn_model" output="screen"
+        args="-param robot_description -urdf -model unit_box -x 0 -y 0 -z 0.1"/>
+
+  <!-- Controller Spawner -->
+  <node name="controller_spawner" pkg="controller_manager" type="spawner"
+        args="joint1_position_controller joint2_position_controller"
+        output="screen"/>
+
+</launch>

@@ -1,0 +1,190 @@
+<?xml version="1.0"?>
+<robot name="three_link_robot_with_imus">
+
+  <!-- Link 1 -->
+  <link name="link1">
+    <visual>
+      <geometry>
+        <box size="1 0.1 0.1"/>
+      </geometry>
+      <origin xyz="0.5 0 0"/>
+      <material name="gray">
+        <color rgba="0.5 0.5 0.5 1.0"/>
+      </material>
+    </visual>
+    <collision>
+      <geometry>
+        <box size="1 0.1 0.1"/>
+      </geometry>
+      <origin xyz="0.5 0 0"/>
+    </collision>
+    <inertial>
+      <mass value="1"/>
+      <origin xyz="0.5 0 0"/>
+      <inertia ixx="0.01" ixy="0" ixz="0" iyy="0.01" iyz="0" izz="0.01"/>
+    </inertial>
+  </link>
+
+  <!-- IMU Plugin for link1 -->
+  <gazebo reference="link1">
+    <gravity>true</gravity>
+    <sensor name="imu_sensor1" type="imu">
+      <always_on>true</always_on>
+      <update_rate>100</update_rate>
+      <visualize>true</visualize>
+      <topic>__default_topic__</topic>
+      <plugin filename="libgazebo_ros_imu_sensor.so" name="imu_plugin">
+        <topicName>/link1/imu</topicName>
+        <bodyName>imu_link</bodyName>
+        <updateRateHZ>10.0</updateRateHZ>
+        <gaussianNoise>0.0</gaussianNoise>
+        <xyzOffset>0 0 0</xyzOffset>
+        <rpyOffset>0 0 0</rpyOffset>
+        <frameName>imu_link</frameName>
+        <initialOrientationAsReference>false</initialOrientationAsReference>
+      </plugin>
+      <pose>0 0 0 0 0 0</pose>
+    </sensor>
+  </gazebo>
+
+  <!-- Joint 1 -->
+  <joint name="joint1" type="revolute">
+    <parent link="link1"/>
+    <child link="link2"/>
+    <origin xyz="1 0 0"/>
+    <axis xyz="0 0 1"/>
+    <limit lower="-3.14" upper="3.14" effort="1.0" velocity="1.0"/>
+  </joint>
+
+  <!-- Link 2 -->
+  <link name="link2">
+    <visual>
+      <geometry>
+        <box size="1 0.1 0.1"/>
+      </geometry>
+      <origin xyz="0.5 0 0"/>
+      <material name="blue">
+        <color rgba="0.2 0.2 0.8 1.0"/>
+      </material>
+    </visual>
+    <collision>
+      <geometry>
+        <box size="1 0.1 0.1"/>
+      </geometry>
+      <origin xyz="0.5 0 0"/>
+    </collision>
+    <inertial>
+      <mass value="1"/>
+      <origin xyz="0.5 0 0"/>
+      <inertia ixx="0.01" ixy="0" ixz="0" iyy="0.01" iyz="0" izz="0.01"/>
+    </inertial>
+  </link>
+
+  <!-- IMU Plugin for link2 -->
+  <gazebo reference="link2">
+    <gravity>true</gravity>
+    <sensor name="imu_sensor2" type="imu">
+      <always_on>true</always_on>
+      <update_rate>100</update_rate>
+      <visualize>true</visualize>
+      <topic>__default_topic__</topic>
+      <plugin filename="libgazebo_ros_imu_sensor.so" name="imu_plugin">
+        <topicName>/link2/imu</topicName>
+        <bodyName>imu_link</bodyName>
+        <updateRateHZ>10.0</updateRateHZ>
+        <gaussianNoise>0.0</gaussianNoise>
+        <xyzOffset>0 0 0</xyzOffset>
+        <rpyOffset>0 0 0</rpyOffset>
+        <frameName>imu_link</frameName>
+        <initialOrientationAsReference>false</initialOrientationAsReference>
+      </plugin>
+      <pose>0 0 0 0 0 0</pose>
+    </sensor>
+  </gazebo>
+
+  <!-- Joint 2 -->
+  <joint name="joint2" type="revolute">
+    <parent link="link2"/>
+    <child link="link3"/>
+    <origin xyz="1 0 0"/>
+    <axis xyz="0 1 0"/>
+    <limit lower="-3.14" upper="3.14" effort="1.0" velocity="1.0"/>
+  </joint>
+
+  <!-- Link 3 -->
+  <link name="link3">
+    <visual>
+      <geometry>
+        <box size="1 0.1 0.1"/>
+      </geometry>
+      <origin xyz="0.5 0 0"/>
+      <material name="red">
+        <color rgba="0.8 0.2 0.2 1.0"/>
+      </material>
+    </visual>
+    <collision>
+      <geometry>
+        <box size="1 0.1 0.1"/>
+      </geometry>
+      <origin xyz="0.5 0 0"/>
+    </collision>
+    <inertial>
+      <mass value="1"/>
+      <origin xyz="0.5 0 0"/>
+      <inertia ixx="0.01" ixy="0" ixz="0" iyy="0.01" iyz="0" izz="0.01"/>
+    </inertial>
+  </link>
+
+  <!-- IMU Plugin for link3 -->
+   <gazebo reference="link3">
+    <gravity>true</gravity>
+    <sensor name="imu_sensor3" type="imu">
+      <always_on>true</always_on>
+      <update_rate>100</update_rate>
+      <visualize>true</visualize>
+      <topic>__default_topic__</topic>
+      <plugin filename="libgazebo_ros_imu_sensor.so" name="imu_plugin">
+        <topicName>/link3/imu</topicName>
+        <bodyName>imu_link</bodyName>
+        <updateRateHZ>10.0</updateRateHZ>
+        <gaussianNoise>0.0</gaussianNoise>
+        <xyzOffset>0 0 0</xyzOffset>
+        <rpyOffset>0 0 0</rpyOffset>
+        <frameName>imu_link</frameName>
+        <initialOrientationAsReference>false</initialOrientationAsReference>
+      </plugin>
+      <pose>0 0 0 0 0 0</pose>
+    </sensor>
+  </gazebo>
+
+  <!-- Joint1 Transmission -->
+  <transmission name="trans_joint1">
+    <type>transmission_interface/SimpleTransmission</type>
+    <joint name="joint1">
+      <hardwareInterface>hardware_interface/PositionJointInterface</hardwareInterface>
+    </joint>
+    <actuator name="motor1">
+      <hardwareInterface>hardware_interface/PositionJointInterface</hardwareInterface>
+      <mechanicalReduction>1</mechanicalReduction>
+    </actuator>
+  </transmission>
+
+  <!-- Joint2 Transmission -->
+  <transmission name="trans_joint2">
+    <type>transmission_interface/SimpleTransmission</type>
+    <joint name="joint2">
+      <hardwareInterface>hardware_interface/PositionJointInterface</hardwareInterface>
+    </joint>
+    <actuator name="motor2">
+      <hardwareInterface>hardware_interface/PositionJointInterface</hardwareInterface>
+      <mechanicalReduction>1</mechanicalReduction>
+    </actuator>
+  </transmission>
+
+
+  <gazebo>
+    <plugin name="gazebo_ros_control" filename="libgazebo_ros_control.so"/>
+  </gazebo>
+
+
+</robot>

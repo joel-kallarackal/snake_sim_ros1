@@ -1,0 +1,8 @@
+controller_list:
+  - name: joint1_position_controller
+    type: position_controllers/JointPositionController
+    joint: joint1
+
+  - name: joint2_position_controller
+    type: position_controllers/JointPositionController
+    joint: joint2

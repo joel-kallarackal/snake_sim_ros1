@@ -1,0 +1,16 @@
+<launch>
+    <arg name="config_file" default="$(find snakelib_bullet)/param/sim_params.yaml" />
+    <!-- <arg name="urdf_path" default="$(find snakelib_description)/rsnake/rsnake.urdf" /> -->
+    <arg name="urdf_path" default="$(find snakelib_description)/REU_snake/REU_snake.urdf" />
+
+    <node pkg="snakelib_bullet" type="pybullet_interface.py" name="pybullet_interface" output="screen">
+        <rosparam file="$(arg config_file)" command="load" />
+        <param name="urdf_path" type="string" value="$(arg urdf_path)" />
+    </node>
+
+    <!-- <node pkg="imu_filter_madgwick" type="imu_filter_node" name="imu_filter" output="screen">
+        <param name="use_mag" value="false"/>
+        <param name="gain" value="0.1"/>
+        <remap from="imu/data" to="/imu/filtered"/>
+    </node> -->
+</launch>
