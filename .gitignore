@@ -4,3 +4,5 @@ diffbot_control
 demo
 snakelib_control
 test_ws
+.vscode
+.gitignore
