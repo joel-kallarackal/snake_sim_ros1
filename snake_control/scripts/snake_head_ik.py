@@ -11,6 +11,20 @@ import termios
 import tty
 import copy
 
+def ik_2modules(r, p, y):
+    theta1, theta2 = 0,0
+    if p != np.pi/2 and p != -np.pi/2:
+        theta1 = -p
+        theta2 = y
+    else:
+        theta1 = -p
+        if theta1 == np.pi/2:
+            theta2 = 90 - r
+        else:
+            theta2 = -(90 - r)
+        
+    return theta1, theta2
+
 def get_key():
     fd = sys.stdin.fileno()
     old_settings = termios.tcgetattr(fd)

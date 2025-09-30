@@ -251,27 +251,27 @@ if __name__ == '__main__':
             # Compress and release
              
              
-            key = get_key()
-            if key=="q":
-                joint_angle+=0.05
-            elif key=="a": 
-                joint_angle-=0.05
-            else:
-                pass
-            beta_even = 0
-            beta_odd = 0
-            A_even = 0 if t%2==0 else -1
-            A_odd = 0
-            delta_even = 0
-            delta_odd = 0
-            msg.position = np.concatenate((np.array([0, 0, joint_angle, 0]),np.array([gait(get_param(i,beta_even,beta_odd),
-                                 get_param(i,A_even,A_odd),
-                                 0,
-                                 i,
-                                 0,
-                                 t,
-                                 get_param(i,delta_even+(i/2)*(np.pi/2),delta_odd)) for i in range(12)])))
-            pub.publish(msg)
+            # key = get_key()
+            # if key=="q":
+            #     joint_angle+=0.05
+            # elif key=="a": 
+            #     joint_angle-=0.05
+            # else:
+            #     pass
+            # beta_even = 0
+            # beta_odd = 0
+            # A_even = 0 if t%2==0 else -1
+            # A_odd = 0
+            # delta_even = 0
+            # delta_odd = 0
+            # msg.position = np.concatenate((np.array([0, 0, joint_angle, 0]),np.array([gait(get_param(i,beta_even,beta_odd),
+            #                      get_param(i,A_even,A_odd),
+            #                      0,
+            #                      i,
+            #                      0,
+            #                      t,
+            #                      get_param(i,delta_even+(i/2)*(np.pi/2),delta_odd)) for i in range(12)])))
+            # pub.publish(msg)
             
             # Fixed shape, since time not varying
             # msg.position = [gait(get_param(i,beta_even,beta_odd),
@@ -283,19 +283,21 @@ if __name__ == '__main__':
             #                      get_param(i,delta_even,delta_odd)) for i in range(16)]
             
             # Sidewinding
-            # beta_even = 0
-            # beta_odd = 0
-            # A_even = 1
-            # A_odd = 1
-            # delta_even = 0
-            # delta_odd = np.pi/4
-            # msg.position = [gait(get_param(i,beta_even,beta_odd),
-            #                      get_param(i,A_even,A_odd),
-            #                      1,
-            #                      i,
-            #                      1,
-            #                      t,
-            #                      get_param(i,delta_even,delta_odd)) for i in range(16)]
+            beta_even = 0
+            beta_odd = 0
+            A_even = 0.8
+            A_odd = 0.8
+            delta_even = 0
+            delta_odd = np.pi/4
+            msg.position = [gait(get_param(i,beta_even,beta_odd),
+                                 get_param(i,A_even,A_odd),
+                                 0.5,
+                                 i,
+                                 0.7,
+                                 t,
+                                 get_param(i,delta_even,delta_odd)) for i in range(16)]
+            
+            pub.publish(msg)
             
             # Snake forms and arc and rolls
             # beta_even = 0
